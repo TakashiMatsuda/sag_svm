@@ -27,6 +27,23 @@ def sag(target, derivative):
 
     return r
 
+"""
+この下の2つの関数minus2, di_parabora10は、
+centerが最小点の二次関数の微分係数を計算する。
+
+2つの関数に分けてしまうのは不本意なので、
+1つにまとめる方法がないかな。
+"""
+
+
+def minus2(a, center):
+    return 2 * (a - center)
+
+
+def div_parabora10(r):
+    vfunc = np.vectorize(minus2)
+    return vfunc(r).sum()
+
 
 def parabora10(r, val_min):
     m = np.array([val_min for x in range(len(r))])
@@ -46,7 +63,7 @@ def test_sag():
     返り値が、全ての値が10のベクトルであることを確認する。
     10と一致という概念は、とりあえず、9.9から10.1の中に落ちることを確認する。
     """
-    sol_list = sag(partial(parabora10, val_min=10))
+    sol_list = sag(partial(parabora10, val_min=10), div_parabora10)
     for sol in sol_list:
         assert sol > 9.9 and sol < 10.1, \
             "value was odd, should be inside the range"

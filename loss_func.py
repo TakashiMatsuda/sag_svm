@@ -3,6 +3,7 @@
 import numpy as np
 import pdb
 
+
 def loss_func(r, lam, y, k):
     """
     r is the parameter of the svm (numpy array, size=n)
@@ -21,7 +22,7 @@ def loss_func(r, lam, y, k):
 
 
 def test_loss_func():
-    N = 2
+
     r = np.array([0.3, 4])
     lam = 0.4
     y = np.array([1, 0])
