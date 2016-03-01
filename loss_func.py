@@ -1,7 +1,6 @@
 #!/Users/takashi/.pyenv/shims/python
 
 import numpy as np
-import pdb
 
 
 def loss_func(r, lam, y, k):
@@ -21,8 +20,11 @@ def loss_func(r, lam, y, k):
     return (s1 - s2)
 
 
-def test_loss_func():
+def derivative_loss_func(r, lam, y, k):
 
+
+
+def test_loss_func():
     r = np.array([0.3, 4])
     lam = 0.4
     y = np.array([1, 0])
