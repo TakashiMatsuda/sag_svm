@@ -21,7 +21,10 @@ def loss_func(r, lam, y, k):
 
 
 def derivative_loss_func(r, lam, y, k):
-
+    """
+    not yet implemented
+    """
+    return 0
 
 
 def test_loss_func():
@@ -30,4 +33,15 @@ def test_loss_func():
     y = np.array([1, 0])
     k = np.array([[0.5, 4], [5, 0.1]])
     print(loss_func(r, lam, y, k))
+    assert 0
+
+
+def test_derivative_loss_func():
+    """
+    loss_funcの微分係数を計算し、テストする
+    """
+    r = np.array([0.3, 4])
+    lam = 0.4
+    y = np.array([1, 0])
+    k = np.array([[0.5, 4], [5, 0.1]])
     assert 0
