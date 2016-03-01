@@ -20,10 +20,12 @@ def sag(target, derivative):
     # Random dimension to improve specially
 
     alpha = 0.8
-    for ct in range(100):
-        ik = (rd.rand() * LENG) % LENG
-        y_vec[ik] = derivative(target, ik, r)
+    for ct in range(50):
+        ik = (rd.rand() * LENG) // LENG
+        y_vec[ik] = derivative(r)
+#        y_vec[ik] = derivative(target, ik, r)
         r = np.subtract(r, (alpha / float(LENG)) * np.sum(y_vec, axis=0))
+        print(r)
 
     return r
 
@@ -42,7 +44,8 @@ def minus2(a, center):
 
 def div_parabora10(r):
     vfunc = np.vectorize(minus2)
-    return vfunc(r).sum()
+    tmp = vfunc(r, 10)
+    return tmp.sum()
 
 
 def parabora10(r, val_min):
@@ -65,5 +68,6 @@ def test_sag():
     """
     sol_list = sag(partial(parabora10, val_min=10), div_parabora10)
     for sol in sol_list:
+        print(sol)
         assert sol > 9.9 and sol < 10.1, \
             "value was odd, should be inside the range"
