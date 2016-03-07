@@ -1,7 +1,7 @@
 #!/Users/takashi/.pyenv/shims/python
 
 
-def trainedsvm(svx, svr, svy, ker, x):
+def trainedsvm(svx, svy, svr, ker, x):
     """
         support vector : svx
         trained coefficient : svr
