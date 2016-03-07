@@ -5,6 +5,7 @@ import numpy as np
 
 def loss_func(r, lam, y, k):
     """
+    This returns the loss function for the SVM.
     r is the parameter of the svm (numpy array, size=n)
     lam is the parameter of the svm (float)
     y is the label of the data (numpy array, size=n)
@@ -12,6 +13,9 @@ def loss_func(r, lam, y, k):
     """
     s1 = r.sum()
     s2 = 0.0
+
+    # TODO: make this code smater and faster using numpy calculation
+    # it's not easy.
     for i, y_i in enumerate(y):
         for j, y_j in enumerate(y):
             s2 = s2 + y_i * y_j * r[i] * r[j] * k[i, j]
@@ -20,11 +24,16 @@ def loss_func(r, lam, y, k):
     return (s1 - s2)
 
 
-def derivative_loss_func(r, lam, y, k):
+def derivative_loss_func(r, lam, y, k, i):
     """
-    not yet implemented
+        This returns the derivative of the loss function for the SVM.
+        i is the dimension number which differentiates the loss function.
     """
-    return 0
+    s = 0.
+    for j, y_j in enumerate(y):
+        s = s + y_j * r[j] * k[i, j]
+
+    return (1 - s * y[i] / 2)
 
 
 def test_loss_func():
