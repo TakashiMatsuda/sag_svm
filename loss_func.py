@@ -50,7 +50,9 @@ def test_derivative_loss_func():
     loss_funcの微分係数を計算し、テストする
     """
     r = np.array([0.3, 4])
-    lam = 0.4
+    lam = 1.
     y = np.array([1, 0])
     k = np.array([[0.5, 4], [5, 0.1]])
+    ## TODO: Make the codo to check that r, y, k has the same dimension.
+    print(derivative_loss_func(r, lam, y, k, 0))
     assert 0
