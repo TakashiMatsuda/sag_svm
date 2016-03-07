@@ -2,7 +2,7 @@
 
 def read_x(filepath):
     """
-
+    
     """
     dim_strain = 0
     x = [[0 for j in range(dim_strain)] for i in range(dim_strain)]
