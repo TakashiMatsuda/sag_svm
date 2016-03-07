@@ -3,10 +3,14 @@
 import numpy as np
 
 
-def find_sv(r, y):
+def find_sv(r):
+    """
+        This function returns the index numbers that
+        are not equal to zero, which are 'support vector.'
+    """
     svlist = []
-    for i, y_i in enumerate(y):
-        if (r[i] * y_i) == 0:
+    for i, r_i in enumerate(r):
+        if r_i != 0:
             svlist.append(i)
 
     return svlist
@@ -23,7 +27,9 @@ def write_sv(x, y, r, svlist):
 
 
 def test_find_sv():
-    assert 0
+    r = np.array([0.4, 0.2, 0])
+    sol = find_sv(r)
+    assert sol == [0, 1]
 
 
 def test_write_sv():
