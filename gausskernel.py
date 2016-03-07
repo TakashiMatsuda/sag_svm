@@ -10,7 +10,6 @@ def gausskernel(x1, x2):
         This code returns a gaussian kernel value between x1 and x2
     """
     subtr = np.subtract(x1, x2)
-    print(subtr)
     return math.exp(- np.inner(subtr, subtr) / 2)
 
 
@@ -21,4 +20,4 @@ def test_gausskernel():
     print("gausskernel: " + str(sol) +
           " between " + str(tx1) + " and " + str(tx2))
 
-    assert sol == 0
+    assert sol == 1
