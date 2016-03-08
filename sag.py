@@ -22,7 +22,7 @@ def sag(target, derivative):
     alpha = 0.8
     for ct in range(50):
         ik = (rd.rand() * LENG) // LENG
-        y_vec[ik] = derivative(r)
+        y_vec[ik] = derivative(r, ik)
 #        y_vec[ik] = derivative(target, ik, r)
         r = np.subtract(r, (alpha / float(LENG)) * np.sum(y_vec, axis=0))
         print(r)
