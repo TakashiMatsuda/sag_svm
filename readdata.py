@@ -9,16 +9,17 @@ def read_data(filename):
     Extract the item specifying the features and the labels
     """
     d = sparff.loadarff(filename)
-    data = d[0]
-    return datacleaning(data)
+    data = datacleaning(d[0])
+    return data
 
 
 def datacleaning(data):
-    n_data = np.zeros((len(data), len(data[0])))
+    n_data = np.zeros((len(data), len(data[0]) - 1))
     misslist = []
+    labels = np.zeros(len(data))
     for i, v_x in enumerate(data):
         for j, vv_x in enumerate(v_x):
-            if vv_x == bytes(b'?'):
+            if vv_x in {bytes(b'?'), '?'}:
                 # REMOVE this entry
                 misslist.append(i)
                 break
@@ -39,17 +40,21 @@ def datacleaning(data):
                 n_data[i][j] = (1) if (vv_x == bytes(b'good')) else (0)
                 continue
             elif j in {24}:
-                n_data[i][j] = (1) if (vv_x == bytes(b'ckd')) else (0)
+                labels[i] = (1) if (vv_x == bytes(b'ckd')) else (0)
                 continue
             else:
                 n_data[i][j] = vv_x
                 continue
 
-    return n_data
+    slc_idx = np.array([(True) if v not in misslist else (False)  for v in range(len(data))])
+    return (n_data[slc_idx], labels[slc_idx])
 
 
 def test_readdata():
     fn = "./chronic_kidney_disease/Chronic_Kidney_Disease_full.arff"
     d = read_data(fn)
+    x = d[0]
+    y = d[1]
     print(d)
-    assert d[0][0] == 48
+    assert x[0][0] == 62
+    assert y[0] == 1
