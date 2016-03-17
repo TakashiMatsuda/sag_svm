@@ -1,6 +1,6 @@
 #!/Users/takashi/.pyenv/shims/python
 
-import read_x
+import readdata
 import loss_func
 import sag
 import write_sv
@@ -17,8 +17,10 @@ if __name__ == '__main__':
     fn_y = sys.argv[2]
 
     # read the data
-    x = read_x.read_x(fn_x)
-    y = read_y.read_y(fn_y)
+    data = read_data("Chronic_Kidney_Disease_full.arff")
+    
+
+
     # the special case of those, which is the kernel
     kmx = make_kmx.make_kmx(x, gausskernel)
     # get the optimum parameter
