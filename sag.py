@@ -5,27 +5,26 @@ import numpy.random as rd
 from functools import partial
 
 
-def sag(target, derivative):
+def sag(target, derivative, dim_leng):
     """
     Stochastic average decent method
     to minimize the target function
     target: function, temporally partial.
     """
-    LENG = 4
+
     # initial value is a zero vector
-    r = np.zeros(LENG)
+    r = np.zeros(dim_leng)
 #    candi_r = np.zeros(LENG)
 
-    y_vec = np.zeros((LENG, LENG))
+    y_vec = np.zeros((dim_leng, dim_leng))
     # Random dimension to improve specially
 
     alpha = 0.8
     for ct in range(50):
-        ik = (rd.rand() * LENG) // LENG
-        y_vec[ik] = derivative(r, ik)
+        ik = int((rd.rand() * dim_leng) // dim_leng)
+        y_vec[ik] = derivative(r=r, i=ik)
 #        y_vec[ik] = derivative(target, ik, r)
-        r = np.subtract(r, (alpha / float(LENG)) * np.sum(y_vec, axis=0))
-        print(r)
+        r = np.subtract(r, (alpha / float(dim_leng)) * np.sum(y_vec, axis=0))
 
     return r
 

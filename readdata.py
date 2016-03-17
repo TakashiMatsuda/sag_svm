@@ -46,7 +46,8 @@ def datacleaning(data):
                 n_data[i][j] = vv_x
                 continue
 
-    slc_idx = np.array([(True) if v not in misslist else (False)  for v in range(len(data))])
+    slc_idx = np.array([(True) if v not in misslist else (False)
+                        for v in range(len(data))])
     return (n_data[slc_idx], labels[slc_idx])
 
 
