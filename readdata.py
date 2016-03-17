@@ -1,5 +1,6 @@
 #!/Users/takashi/.pyenv/shims/python
 
+
 from scipy.io import arff as sparff
 import numpy as np
 
@@ -23,7 +24,6 @@ def datacleaning(data):
                 # REMOVE this entry
                 misslist.append(i)
                 break
-            # 以下列挙
             elif j in {2, 3, 4}:
                 n_data[i][j] = float(vv_x)
                 continue
@@ -43,8 +43,12 @@ def datacleaning(data):
                 labels[i] = (1) if (vv_x == bytes(b'ckd')) else (0)
                 continue
             else:
-                n_data[i][j] = vv_x
-                continue
+                if np.isnan(vv_x):
+                    misslist.append(i)
+                    break
+                else:
+                    n_data[i][j] = vv_x
+                    continue
 
     slc_idx = np.array([(True) if v not in misslist else (False)
                         for v in range(len(data))])
