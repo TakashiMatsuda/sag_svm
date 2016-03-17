@@ -10,5 +10,8 @@ The SVM implementation with the stochastic average gradient method as its optimi
 
 # Usage
 
+## Requiment
+Python3, Numpy
+
 
 # Result
