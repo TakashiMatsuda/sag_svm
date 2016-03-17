@@ -56,5 +56,7 @@ def test_readdata():
     x = d[0]
     y = d[1]
     print(d)
-    assert x[0][0] == 62
+    assert x[0][7] == 0
+    assert x[1][1] == 70
     assert y[0] == 1
+    assert y[1] == 1
