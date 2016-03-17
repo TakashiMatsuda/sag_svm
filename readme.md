@@ -1,4 +1,4 @@
-# SVM with Stochastic-Average-Decent method
+# SVM with Stochastic-Average-Gradient method
 [![Build Status](https://travis-ci.org/TakashiMatsuda/sag_svm.svg?branch=edditing)](https://travis-ci.org/TakashiMatsuda/sag_svm)
 
 The SVM implementation with the stochastic average gradient method as its optimizer.
@@ -15,6 +15,7 @@ Python3, Numpy
 
 
 # Result
+not yet, still debugging now
 
 # License
 MIT License
