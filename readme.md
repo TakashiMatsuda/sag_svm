@@ -15,3 +15,6 @@ Python3, Numpy
 
 
 # Result
+
+# License
+MIT License
