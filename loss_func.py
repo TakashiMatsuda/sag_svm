@@ -30,11 +30,14 @@ def derivative_loss_func(r, lam, y, k, i):
         i is the dimension number which differentiates the loss function.
         CHECK IT.
     """
-    s = 0.
+    s1 = 0.
+    s2 = 0.
     for j, y_j in enumerate(y):
-        s = s + y_j * r[j] * k[i, j]
+        if j != i:
+            s1 = s1 - y_j * r[j] * k[i, j]
+        s2 = s2 + y_j * k[i, j]
 
-    return (1 - s * y[i] / 2)
+    return 1 - (s1 * y[i] / 2) + (r[i] * y[i] * s2)
 
 
 def test_loss_func():

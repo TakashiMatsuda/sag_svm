@@ -22,9 +22,9 @@ def sag(target, derivative, dim_leng):
     gra_vec = np.zeros((dim_leng, dim_leng))
     # Random dimension to improve specially
 
-    alpha = 0.8
-    ik = 0.
-    for ct in range(50):
+    alpha = 0.1
+    ik = 0
+    for ct in range(2):
         ik = int((rd.rand() * dim_leng) // 1)
         gra_vec[ik] = derivative(r=r, i=ik)
 #        gra_vec[ik] = derivative(target, ik, r)

@@ -6,6 +6,8 @@ import gausskernel
 
 def make_kmx(x_vec, ker):
     kmx = np.array([[ker(x_i, x_j) for x_j in x_vec] for x_i in x_vec])
+    print("kmx:")
+    print(kmx)
     return kmx
 
 
