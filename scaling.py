@@ -25,4 +25,4 @@ def test_scaling():
     """
         average test
     """
-    assert np.sum(res) == 0
+    assert (np.sum(res))[0] == 0
