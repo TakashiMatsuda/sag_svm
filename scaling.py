@@ -48,8 +48,8 @@ def test_scaling():
     """
         average test
     """
-    assert np.sum(res, axis=0)[3] == 0
+    assert np.sum(res, axis=0)[1] == 0
     """
         variance test
     """
-    assert np.var(res, axis=0)[2] == 1
+    assert np.var(res, axis=0)[1] == 1
