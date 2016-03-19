@@ -19,23 +19,23 @@ def sag(target, derivative, dim_leng):
     r = np.array([rd.rand() for x in range(dim_leng)])
 #    candi_r = np.zeros(LENG)
 
-    y_vec = np.zeros((dim_leng, dim_leng))
+    gra_vec = np.zeros((dim_leng, dim_leng))
     # Random dimension to improve specially
 
     alpha = 0.8
     ik = 0.
     for ct in range(50):
         ik = int((rd.rand() * dim_leng) // 1)
-        y_vec[ik] = derivative(r=r, i=ik)
-#        y_vec[ik] = derivative(target, ik, r)
+        gra_vec[ik] = derivative(r=r, i=ik)
+#        gra_vec[ik] = derivative(target, ik, r)
 
 # this line makes same value's vector, that is strange
-        r = np.subtract(r, (alpha / float(dim_leng)) * np.sum(y_vec, axis=0))
-# y_vec is strange, probably due to derivative_loss_func
+        r = np.subtract(r, (alpha / float(dim_leng)) * np.sum(gra_vec, axis=0))
+# gra_vec is strange, probably due to derivative_loss_func
 
         print('ik: ' + str(ik))
         print('r:  ' + str(r))
-        print('y_vec:  ' + str(y_vec))
+        print('gra_vec:  ' + str(gra_vec))
     return r
 
 """

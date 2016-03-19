@@ -28,19 +28,19 @@ def datacleaning(data):
                 n_data[i][j] = float(vv_x)
                 continue
             elif j in {5, 6}:
-                n_data[i][j] = (1) if (vv_x == bytes(b'normal')) else (0)
+                n_data[i][j] = (1) if (vv_x == bytes(b'normal')) else (-1)
                 continue
             elif j in {7, 8}:
-                n_data[i][j] = (1) if (vv_x == bytes(b'present')) else (0)
+                n_data[i][j] = (1) if (vv_x == bytes(b'present')) else (-1)
                 continue
             elif j in {18, 19, 20, 22, 23}:
-                n_data[i][j] = (1) if (vv_x == bytes(b'yes')) else (0)
+                n_data[i][j] = (1) if (vv_x == bytes(b'yes')) else (-1)
                 continue
             elif j in {21}:
-                n_data[i][j] = (1) if (vv_x == bytes(b'good')) else (0)
+                n_data[i][j] = (1) if (vv_x == bytes(b'good')) else (-1)
                 continue
             elif j in {24}:
-                labels[i] = (1) if (vv_x == bytes(b'ckd')) else (0)
+                labels[i] = (1) if (vv_x == bytes(b'ckd')) else (-1)
                 continue
             else:
                 if np.isnan(vv_x):
