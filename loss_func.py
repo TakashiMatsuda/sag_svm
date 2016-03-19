@@ -28,6 +28,7 @@ def derivative_loss_func(r, lam, y, k, i):
     """
         This returns the derivative of the loss function for the SVM.
         i is the dimension number which differentiates the loss function.
+        CHECK IT.
     """
     s = 0.
     for j, y_j in enumerate(y):

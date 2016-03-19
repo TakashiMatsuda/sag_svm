@@ -13,19 +13,29 @@ def sag(target, derivative, dim_leng):
     """
 
     # initial value is a zero vector
-    r = np.zeros(dim_leng)
+    # This may makes a strange matter.
+#    r = np.zeros(dim_leng)
+    # improve version
+    r = np.array([rd.rand() for x in range(dim_leng)])
 #    candi_r = np.zeros(LENG)
 
     y_vec = np.zeros((dim_leng, dim_leng))
     # Random dimension to improve specially
 
     alpha = 0.8
+    ik = 0.
     for ct in range(50):
-        ik = int((rd.rand() * dim_leng) // dim_leng)
+        ik = int((rd.rand() * dim_leng) // 1)
         y_vec[ik] = derivative(r=r, i=ik)
 #        y_vec[ik] = derivative(target, ik, r)
-        r = np.subtract(r, (alpha / float(dim_leng)) * np.sum(y_vec, axis=0))
 
+# this line makes same value's vector, that is strange
+        r = np.subtract(r, (alpha / float(dim_leng)) * np.sum(y_vec, axis=0))
+# y_vec is strange, probably due to derivative_loss_func
+
+        print('ik: ' + str(ik))
+        print('r:  ' + str(r))
+        print('y_vec:  ' + str(y_vec))
     return r
 
 """
@@ -41,7 +51,7 @@ def minus2(a, center):
     return 2 * (a - center)
 
 
-def div_parabora10(r):
+def div_parabora10(r, i):
     vfunc = np.vectorize(minus2)
     tmp = vfunc(r, 10)
     return tmp.sum()
@@ -65,7 +75,7 @@ def test_sag():
     返り値が、全ての値が10のベクトルであることを確認する。
     10と一致という概念は、とりあえず、9.9から10.1の中に落ちることを確認する。
     """
-    sol_list = sag(partial(parabora10, val_min=10), div_parabora10)
+    sol_list = sag(partial(parabora10, val_min=10), div_parabora10, 4)
     for sol in sol_list:
         print(sol)
         assert sol > 9.9 and sol < 10.1, \

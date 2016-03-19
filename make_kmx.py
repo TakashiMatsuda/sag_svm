@@ -2,7 +2,6 @@
 
 import numpy as np
 import gausskernel
-from functools import partial
 
 
 def make_kmx(x_vec, ker):
