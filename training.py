@@ -7,6 +7,7 @@ import write_sv
 from functools import partial
 import make_kmx
 import gausskernel
+import scaling
 
 
 def training(x, y):
@@ -30,7 +31,15 @@ if __name__ == '__main__':
     x = data[0]
     y = data[1]
 
+    print("x: ")
+    print(x)
+    # scaling x
+    x = scaling.scaling(x)
+    print("scaled x:")
+    print(x)
+
     # calculating the gausskernel (for the experiment)
+
     kmx = make_kmx.make_kmx(x, gausskernel.gausskernel)
 
     # get the optimum parameter
