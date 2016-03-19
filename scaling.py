@@ -22,4 +22,7 @@ def test_scaling():
     data = [[rd.rand() * j for i in range(5)] for j in range(5)]
     res = scaling(data)
     print(res)
-    assert np.sum(res)
+    """
+        average test
+    """
+    assert np.sum(res) == 0
