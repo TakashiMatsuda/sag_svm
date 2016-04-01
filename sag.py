@@ -5,11 +5,14 @@ import numpy.random as rd
 from functools import partial
 
 
-def sag(target, derivative, dim_leng):
+def sag(target, derivative, dim_leng, upper_lim, lower_lim):
     """
     Stochastic average decent method
     to minimize the target function
     target: function, temporally partial.
+    """
+    """
+        dim_leng probably be unnecessary
     """
 
     # initial value is a zero vector
@@ -79,4 +82,12 @@ def test_sag():
     for sol in sol_list:
         print(sol)
         assert sol > 9.9 and sol < 10.1, \
+            "value was odd, should be inside the range"
+
+
+def test_sag_range():
+    sol_list = sag(partial(parabora10, val_min=10), div_parabora10, 4)
+    for sol in sol_list:
+        print(sol)
+        assert sol > 1 and sol < 0, \
             "value was odd, should be inside the range"
