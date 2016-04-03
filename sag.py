@@ -27,19 +27,30 @@ def sag(target, derivative, dim_leng, upper_lim, lower_lim):
 
     alpha = 0.1
     ik = 0
-    for ct in range(2):
+    for ct in range(100):
         ik = int((rd.rand() * dim_leng) // 1)
         gra_vec[ik] = derivative(r=r, i=ik)
 #        gra_vec[ik] = derivative(target, ik, r)
 
 # this line makes same value's vector, that is strange
         r = np.subtract(r, (alpha / float(dim_leng)) * np.sum(gra_vec, axis=0))
-# gra_vec is strange, probably due to derivative_loss_func
+        # TODO: Confirm that np.sum(gra_vec, axis=0) is correct to sag
+        # <-- DONE
+        for prm, vl in enumerate(r[:]):
+            if vl > upper_lim:
+                r[prm] = upper_lim
+            elif vl < lower_lim:
+                r[prm] = lower_lim
 
+# gra_vec is strange, probably due to derivative_loss_func
+# <- Kernel value's nature
+    """
         print('ik: ' + str(ik))
         print('r:  ' + str(r))
         print('gra_vec:  ' + str(gra_vec))
+    """
     return r
+
 
 """
 この下の2つの関数minus2, di_parabora10は、
@@ -78,16 +89,16 @@ def test_sag():
     返り値が、全ての値が10のベクトルであることを確認する。
     10と一致という概念は、とりあえず、9.9から10.1の中に落ちることを確認する。
     """
-    sol_list = sag(partial(parabora10, val_min=10), div_parabora10, 4)
+    sol_list = sag(partial(parabora10, val_min=10), div_parabora10, 4, 100, -100)
     for sol in sol_list:
         print(sol)
-        assert sol > 9.9 and sol < 10.1, \
+        assert sol > 9.5 and sol < 10.5, \
             "value was odd, should be inside the range"
 
 
 def test_sag_range():
-    sol_list = sag(partial(parabora10, val_min=10), div_parabora10, 4)
+    sol_list = sag(partial(parabora10, val_min=10), div_parabora10, 4, 1, 0)
     for sol in sol_list:
         print(sol)
-        assert sol > 1 and sol < 0, \
+        assert sol <= 1. and sol >= 0., \
             "value was odd, should be inside the range"
