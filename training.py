@@ -9,6 +9,7 @@ import make_kmx
 import gausskernel
 import scaling
 import numpy as np
+import readiris
 
 
 def training(x, y):
@@ -25,10 +26,12 @@ def training(x, y):
 
 if __name__ == '__main__':
     print("PROGRESS :: starting making the optimum discriminator.")
-    fn = "./chronic_kidney_disease/Chronic_Kidney_Disease_full.arff"
+#    fn = "./chronic_kidney_disease/Chronic_Kidney_Disease_full.arff"
 #    np.set_printoptions(threshold='nan')
     # read the data
-    data = readdata.read_data(fn)
+#    data = readdata.read_data(fn)
+    fn_iris = "./iris/usingdata.csv"
+    data = readiris.readiris(fn_iris)
     x = data[0]
     y = data[1]
 
