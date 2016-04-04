@@ -12,43 +12,30 @@ def sag(target, derivative, dim_leng, upper_lim, lower_lim):
     target: function, temporally partial.
     """
     """
-        dim_leng probably be unnecessary
+        dim_leng : the number of data
     """
-
-    # initial value is a zero vector
-    # This may makes a strange matter.
-#    r = np.zeros(dim_leng)
-    # improve version
     r = np.array([rd.rand() for x in range(dim_leng)])
-#    candi_r = np.zeros(LENG)
 
-    gra_vec = np.zeros((dim_leng, dim_leng))
     # Random dimension to improve specially
+    gra_vec = np.zeros(dim_leng)
 
     alpha = 0.1
     ik = 0
+
     for ct in range(100):
-        ik = int((rd.rand() * dim_leng) // 1)
         gra_vec[ik] = derivative(r=r, i=ik)
-#        gra_vec[ik] = derivative(target, ik, r)
+        for cnt_r, compo_r in enumerate(r[:]):
+            ik = int((rd.rand() * dim_leng) // 1)
+# Let's change the implement
+            rnw_compo_r = compo_r - (alpha / float(dim_leng) * gra_vec[cnt_r])
+            if rnw_compo_r > upper_lim:
+                rnw_compo_r = upper_lim
+            elif rnw_compo_r < lower_lim:
+                rnw_compo_r = lower_lim
+            r[cnt_r] = rnw_compo_r
 
-# this line makes same value's vector, that is strange
-        r = np.subtract(r, (alpha / float(dim_leng)) * np.sum(gra_vec, axis=0))
-        # TODO: Confirm that np.sum(gra_vec, axis=0) is correct to sag
-        # <-- DONE
-        for prm, vl in enumerate(r[:]):
-            if vl > upper_lim:
-                r[prm] = upper_lim
-            elif vl < lower_lim:
-                r[prm] = lower_lim
+    print('gra_vec:  ' + str(gra_vec))
 
-# gra_vec is strange, probably due to derivative_loss_func
-# <- Kernel value's nature
-    """
-        print('ik: ' + str(ik))
-        print('r:  ' + str(r))
-        print('gra_vec:  ' + str(gra_vec))
-    """
     return r
 
 
