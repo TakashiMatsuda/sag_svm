@@ -3,6 +3,7 @@
 import numpy as np
 import numpy.random as rd
 from functools import partial
+import math
 
 
 def sag(target, derivative, dim_leng, upper_lim, lower_lim):
@@ -18,24 +19,22 @@ def sag(target, derivative, dim_leng, upper_lim, lower_lim):
 
     # Random dimension to improve specially
     gra_vec = np.zeros(dim_leng)
-
-    alpha = 0.1
+    alpha = 0.001
     ik = 0
-
-    for ct in range(100):
+    for ct in range(1000000):
+        ik = int((rd.rand() * dim_leng) // 1)
         gra_vec[ik] = derivative(r=r, i=ik)
         for cnt_r, compo_r in enumerate(r[:]):
-            ik = int((rd.rand() * dim_leng) // 1)
-# Let's change the implement
             rnw_compo_r = compo_r - (alpha / float(dim_leng) * gra_vec[cnt_r])
             if rnw_compo_r > upper_lim:
                 rnw_compo_r = upper_lim
             elif rnw_compo_r < lower_lim:
                 rnw_compo_r = lower_lim
             r[cnt_r] = rnw_compo_r
-
-    print('gra_vec:  ' + str(gra_vec))
-
+        if ct % 100 == 0:
+            print('r')
+            print(r)
+    print('sag fin')
     return r
 
 
@@ -82,10 +81,11 @@ def test_sag():
         assert sol > 9.5 and sol < 10.5, \
             "value was odd, should be inside the range"
 
-
+"""
 def test_sag_range():
     sol_list = sag(partial(parabora10, val_min=10), div_parabora10, 4, 1, 0)
     for sol in sol_list:
         print(sol)
         assert sol <= 1. and sol >= 0., \
             "value was odd, should be inside the range"
+"""

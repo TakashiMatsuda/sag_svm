@@ -21,6 +21,8 @@ def drawgraph(x, y, svx, svy, svr, ker):
         for j, z_j in enumerate(z_i[:]):
             z[i, j] = trainedsvm.trainedsvm(svx, svy, svr, ker, xx[i, j])
 
+    print('z')
+    print(z)
     plt.contourf(xx, yy, z, cmap=plt.cm.Paired, alpha=0.8)
     plt.scatter(x[:, 0], x[:, 1], c=y, cmap=plt.cm.Paired)
     plt.show()

@@ -16,13 +16,13 @@ def find_sv(r):
     return svlist
 
 
-def write_sv(x, y, r, svlist):
+def write_sv(x, y, r, svlist, num):
     svx = [x[p] for p in svlist]
     svy = [y[p] for p in svlist]
     svr = [r[p] for p in svlist]
-    np.save('svx.npy', svx)
-    np.save('svy.npy', svy)
-    np.save('svr.npy', svr)
+    np.save(str(num)+'-svx.npy', svx)
+    np.save(str(num)+'-svy.npy', svy)
+    np.save(str(num)+'-svr.npy', svr)
     return 0
 
 

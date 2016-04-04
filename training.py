@@ -9,6 +9,7 @@ import gausskernel
 import scaling
 import numpy as np
 import readiris
+import math
 
 
 def training(x, y):
@@ -21,10 +22,6 @@ def training(x, y):
                     dim_leng=len(y))
 
     return opt_r
-
-
-def test_training():
-    assert 0
 
 
 if __name__ == '__main__':
@@ -48,8 +45,8 @@ if __name__ == '__main__':
     print(x)
 
     # calculating the gausskernel (for the experiment)
-
-    kmx = make_kmx.make_kmx(x, gausskernel.gausskernel)
+    gamma = math.pow(2, -1)
+    kmx = make_kmx.make_kmx(x, partial(gausskernel.gausskernel, gamma=math.pow(2, gamma)))
 
     # get the optimum parameter
     opt_r = sag.sag(partial(loss_func.loss_func, lam=1, y=y, k=kmx),
@@ -58,9 +55,10 @@ if __name__ == '__main__':
     print("opt_r:")
     print(opt_r)  # TODO: delete this line
 
-    # conserve the parameter and the support vector in opt_r
+        # conserve the parameter and the support vector in opt_r
     svidx = write_sv.find_sv(opt_r)
-    write_sv.write_sv(x, y, opt_r, svidx)
+    num = gamma
+    write_sv.write_sv(x, y, opt_r, svidx, num)
 
     # Fin
     print("PROGRESS :: fin")

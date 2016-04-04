@@ -4,6 +4,8 @@ import numpy as np
 import gausskernel
 import readiris
 import drawgraph
+from functools import partial
+import math
 
 
 def trainedsvm(svx, svy, svr, ker, x):
@@ -12,13 +14,11 @@ def trainedsvm(svx, svy, svr, ker, x):
         trained coefficient : svr
         the label about the support vector : svy
         kernel funcion : ker
-
     """
     discrim_v = 0.
 
     for i, svx_i in enumerate(svx):
         discrim_v = discrim_v + svr[i] * svy[i] * ker(svx_i, x)
-#        print(discrim_v)
 
     if discrim_v >= 0:
         return 1
@@ -39,7 +39,9 @@ if __name__ == "__main__":
     svx = np.load('svx.npy')
     svy = np.load('svy.npy')
     svr = np.load('svr.npy')
-    ker = gausskernel.gausskernel
+
+    gamma = math.pow(2, -1)
+    ker = partial(gausskernel.gausskernel, gamma=math.pow(2, gamma))
     """
        load the test data
     """
@@ -57,4 +59,4 @@ if __name__ == "__main__":
     print(answer)
     print("teacher")
     print(y)
-    drawgraph.drawgraph(x, y, svx, svy, svr, gausskernel.gausskernel)
+    drawgraph.drawgraph(x, y, svx, svy, svr, ker)
