@@ -18,8 +18,6 @@ def readiris(filename):
                 d[1].append(1 if row[-1] == 'Iris-setosa' else -1)
         except csv.Error as e:
             sys.exit('file {}, line {}: {}'.format(filename, reader.line_num, e))
-    print(d[0])
-    print(d[1])
     return (d[0], d[1])
 
 

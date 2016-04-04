@@ -1,6 +1,5 @@
 #!/Users/takashi/.pyenv/shims/python
 
-import readdata
 import loss_func
 import sag
 import write_sv
@@ -24,6 +23,10 @@ def training(x, y):
     return opt_r
 
 
+def test_training():
+    assert 0
+
+
 if __name__ == '__main__':
     print("PROGRESS :: starting making the optimum discriminator.")
 #    fn = "./chronic_kidney_disease/Chronic_Kidney_Disease_full.arff"
@@ -32,7 +35,9 @@ if __name__ == '__main__':
 #    data = readdata.read_data(fn)
     fn_iris = "./iris/usingdata.csv"
     data = readiris.readiris(fn_iris)
-    x = data[0]
+    # changed now for testing
+#    x = data[0]
+    x = [l[:2] for l in data[0]]
     y = data[1]
 
     print("x: ")
