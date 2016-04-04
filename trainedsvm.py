@@ -3,6 +3,7 @@
 import numpy as np
 import gausskernel
 import readiris
+import drawgraph
 
 
 def trainedsvm(svx, svy, svr, ker, x):
@@ -14,8 +15,10 @@ def trainedsvm(svx, svy, svr, ker, x):
 
     """
     discrim_v = 0.
+
     for i, svx_i in enumerate(svx):
         discrim_v = discrim_v + svr[i] * svy[i] * ker(svx_i, x)
+#        print(discrim_v)
 
     if discrim_v >= 0:
         return 1
@@ -38,7 +41,7 @@ if __name__ == "__main__":
     svr = np.load('svr.npy')
     ker = gausskernel.gausskernel
     """
-        load the test data
+       load the test data
     """
     fn_iris = './iris/usingdata.csv'
     data = readiris.readiris(fn_iris)
@@ -54,3 +57,4 @@ if __name__ == "__main__":
     print(answer)
     print("teacher")
     print(y)
+    drawgraph.drawgraph(x, y, svx, svy, svr, gausskernel.gausskernel)
