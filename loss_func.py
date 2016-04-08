@@ -2,6 +2,8 @@
 
 import numpy as np
 import copy
+import math
+import numpy.random as rd
 
 
 def loss_func(r, lam, y, k):
@@ -51,7 +53,6 @@ def test_loss_func():
     """
 
 
-
 def test_derivative_loss_func():
     """
     loss_funcの微分係数を計算し、テストする
@@ -60,22 +61,18 @@ def test_derivative_loss_func():
     lam = 1.
     y = np.array([1, 0])
     k = np.array([[0.5, 4], [5, 0.1]])
-    # TODO:
-    # Make the codo to check that r, y, k has the same dimension.
-    res = derivative_loss_func(r, lam, y, k, 0)
     """
         数値微分の値と一致するかどうかでテストを作れる
     """
-    h = 0.00001
-    for i in range(len(r)):
-        tmp = copy.deepcopy(r)
-        tmp[i] = tmp[i] + h
-        print(tmp)
-        print(r)
-        first = loss_func(tmp, lam, y, k)
-        second = loss_func(r, lam, y, k)
-        print("first and second")
-        print(str(first) + ':' + str(second))
-        numdif = (first - second) / h
-        print('COMPARE>>')
-        assert abs(numdif - derivative_loss_func(r, lam, y, k, i)) < 2*h
+    def test_param(param):
+        h = 0.00001
+        for i in range(len(param)):
+            tmp = copy.deepcopy(param)
+            tmp[i] = tmp[i] + h
+            first = loss_func(tmp, lam, y, k)
+            second = loss_func(param, lam, y, k)
+            numdif = (first - second) / h
+            assert abs(numdif - derivative_loss_func(param, lam, y, k, i)) < 2*h
+    for i in range(10):
+        r = np.array([rd.rand() for x in range(2)])
+        test_param(r)

@@ -15,7 +15,7 @@ def sag(target, derivative, dim_leng, upper_lim, lower_lim):
     """
         dim_leng : the number of data
     """
-    r = np.array([rd.rand() for x in range(dim_leng)])
+    r = np.random.uniform(2)
 
     # Random dimension to improve specially
     gra_vec = np.zeros(dim_leng)
