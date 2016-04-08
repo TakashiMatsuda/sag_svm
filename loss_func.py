@@ -1,6 +1,7 @@
 #!/Users/takashi/.pyenv/shims/python
 
 import numpy as np
+import copy
 
 
 def loss_func(r, lam, y, k):
@@ -45,7 +46,10 @@ def test_loss_func():
     y = np.array([1, 0])
     k = np.array([[0.5, 4], [5, 0.1]])
     print(loss_func(r, lam, y, k))
-    assert 0
+    """
+        手計算と合わせる
+    """
+
 
 
 def test_derivative_loss_func():
@@ -58,5 +62,20 @@ def test_derivative_loss_func():
     k = np.array([[0.5, 4], [5, 0.1]])
     # TODO:
     # Make the codo to check that r, y, k has the same dimension.
-    print(derivative_loss_func(r, lam, y, k, 0))
-    assert 0
+    res = derivative_loss_func(r, lam, y, k, 0)
+    """
+        数値微分の値と一致するかどうかでテストを作れる
+    """
+    h = 0.00001
+    for i in range(len(r)):
+        tmp = copy.deepcopy(r)
+        tmp[i] = tmp[i] + h
+        print(tmp)
+        print(r)
+        first = loss_func(tmp, lam, y, k)
+        second = loss_func(r, lam, y, k)
+        print("first and second")
+        print(str(first) + ':' + str(second))
+        numdif = (first - second) / h
+        print('COMPARE>>')
+        assert abs(numdif - derivative_loss_func(r, lam, y, k, i)) < 2*h
