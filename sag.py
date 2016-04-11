@@ -32,16 +32,13 @@ def sag(target, gradient, dim_leng, upper_lim, lower_lim):
 
         # TODO: 'gradient' is different to 'derivative'
         # rewrite below.
-"""
+
         gra_vec[ik] = gradient(r=r, i=ik)
 
         gra = np.sum(gra_vec, axis=0)
-        - np.multiarray(gra, [(alpha / float(dim_leng)) for x in range(len(gra))])
-"""
+        r = np.subtract(r, np.multiarray(gra, [(alpha / float(dim_leng)) for x in range(len(gra))]))
+
         for cnt_r, compo_r in enumerate(r[:]):
-
-            rnw_compo_r = compo_r - (alpha / float(dim_leng) * gra_vec[cnt_r])
-
             if rnw_compo_r > upper_lim:
                 rnw_compo_r = upper_lim
             elif rnw_compo_r < lower_lim:
