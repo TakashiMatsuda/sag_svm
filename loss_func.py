@@ -2,7 +2,6 @@
 
 import numpy as np
 import copy
-import math
 import numpy.random as rd
 
 
@@ -27,17 +26,21 @@ def loss_func(r, lam, y, k):
     return (s1 - s2)
 
 
-def derivative_loss_func(r, lam, y, k, i):
+def gradient_loss_func(r, lam, y, k, i):
     """
         This returns the derivative of the loss function for the SVM.
         i is the dimension number which differentiates the loss function.
     """
+    res = np.zeros(len(r))
+    res = np.array([((- 1) / 2) * y[i] * y[l] * k[i, l] * r[i] for l in range(len(r))])
+
     s1 = 0.
     for j, y_j in enumerate(y):
         if j != i:
             s1 = s1 - y_j * r[j] * k[i, j]
+    res[i] = 1 - (s1 * y[i] / 2) - (r[i] * y[i] * y[i] * k[i, i])
+    return res
 
-    return 1 - (s1 * y[i] / 2) - (r[i] * y[i] * y[i] * k[i, i])
 
 
 def test_loss_func():

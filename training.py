@@ -18,7 +18,7 @@ def training(x, y):
 
     # get the optimum parameter
     opt_r = sag.sag(partial(loss_func.loss_func, lam=1, y=y, k=kmx),
-                    partial(loss_func.derivative_loss_func, lam=1, y=y, k=kmx),
+                    partial(loss_func.gradient_loss_func, lam=1, y=y, k=kmx),
                     dim_leng=len(y))
 
     return opt_r
