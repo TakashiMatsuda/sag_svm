@@ -4,10 +4,11 @@ import numpy as np
 import numpy.random as rd
 from functools import partial
 import math
+import copy
 
 
 def lipshitz(gradient):
-    return 1000
+    return 10
 
 
 def sag(target, gradient, dim_leng, upper_lim, lower_lim):
@@ -23,7 +24,7 @@ def sag(target, gradient, dim_leng, upper_lim, lower_lim):
     gra_vec = np.zeros((dim_leng, dim_leng))
 
     # TODO: set the correct the step-size
-    CT = 10000
+    CT = 1000000
     L = lipshitz(gradient)
     alpha = 1 / (dim_leng * L)
     ik = 0
@@ -36,6 +37,7 @@ def sag(target, gradient, dim_leng, upper_lim, lower_lim):
         gra_vec[ik] = gradient(r=r, i=ik)
 
         gra = np.sum(gra_vec, axis=0)
+        r_old = copy.deepcopy(r)
         r = np.subtract(r, np.multiply(gra, [(alpha / float(dim_leng)) for x in range(len(gra))]))
 
         """
@@ -47,7 +49,7 @@ def sag(target, gradient, dim_leng, upper_lim, lower_lim):
             elif r[cnt_r] < lower_lim:
                 r[cnt_r] = lower_lim
 
-        if ct % 1000 == 0:
+        if ct % 10000 == 0:
             print('gradient: {0}'.format(gra_vec))
             print('alpha: {0}'.format(alpha))
             print('r: {0}'.format(r))
@@ -55,7 +57,12 @@ def sag(target, gradient, dim_leng, upper_lim, lower_lim):
         """
             A Judgement as to the convergence of 'r'
         """
-        # TODO: Implement the feature the above
+        diff_r = [r[z] - r_old[z] for z in range(len(r))]
+        for val in diff_r:
+            if val > 0.0001:
+                break
+        #else:
+            #print('MSG: r is converged')
 
     print('sag fin')
     return r
