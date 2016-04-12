@@ -6,8 +6,8 @@ from functools import partial
 import math
 
 
-def lipshitz(derivative):
-
+def lipshitz(gradient):
+    return 1000
 
 
 def sag(target, gradient, dim_leng, upper_lim, lower_lim):
@@ -20,11 +20,11 @@ def sag(target, gradient, dim_leng, upper_lim, lower_lim):
     r = np.random.uniform(size=dim_leng)
 
     # Random i to specially improve
-    gra_vec = np.zeros(dim_leng, dim_leng)
+    gra_vec = np.zeros((dim_leng, dim_leng))
 
     # TODO: set the correct the step-size
     CT = 10000
-    L = lipshitz(derivative)
+    L = lipshitz(gradient)
     alpha = 1 / (dim_leng * L)
     ik = 0
     for ct in range(CT):
@@ -36,14 +36,16 @@ def sag(target, gradient, dim_leng, upper_lim, lower_lim):
         gra_vec[ik] = gradient(r=r, i=ik)
 
         gra = np.sum(gra_vec, axis=0)
-        r = np.subtract(r, np.multiarray(gra, [(alpha / float(dim_leng)) for x in range(len(gra))]))
+        r = np.subtract(r, np.multiply(gra, [(alpha / float(dim_leng)) for x in range(len(gra))]))
 
-        for cnt_r, compo_r in enumerate(r[:]):
-            if rnw_compo_r > upper_lim:
-                rnw_compo_r = upper_lim
-            elif rnw_compo_r < lower_lim:
-                rnw_compo_r = lower_lim
-            r[cnt_r] = rnw_compo_r
+        """
+            Check that r is in the range
+        """
+        for cnt_r in range(len(r)):
+            if r[cnt_r] > upper_lim:
+                r[cnt_r] = upper_lim
+            elif r[cnt_r] < lower_lim:
+                r[cnt_r] = lower_lim
 
         if ct % 1000 == 0:
             print('gradient: {0}'.format(gra_vec))
@@ -112,4 +114,3 @@ def test_sag(capsys):
     """
         test for convergence
     """
-    assert 0
