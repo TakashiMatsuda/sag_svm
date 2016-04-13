@@ -8,7 +8,8 @@ import copy
 
 
 def lipshitz(gradient):
-    return 10
+    # TODO: implement line search
+    return 20
 
 
 def sag(target, gradient, dim_leng, upper_lim, lower_lim):
@@ -24,18 +25,13 @@ def sag(target, gradient, dim_leng, upper_lim, lower_lim):
     gra_vec = np.zeros((dim_leng, dim_leng))
 
     # TODO: set the correct the step-size
-    CT = 1000000
+    CT = 10000
     L = lipshitz(gradient)
     alpha = 1 / (dim_leng * L)
     ik = 0
     for ct in range(CT):
         ik = int((rd.rand() * dim_leng) // 1)
-
-        # TODO: 'gradient' is different to 'derivative'
-        # rewrite below.
-
         gra_vec[ik] = gradient(r=r, i=ik)
-
         gra = np.sum(gra_vec, axis=0)
         r_old = copy.deepcopy(r)
         r = np.subtract(r, np.multiply(gra, [(alpha / float(dim_leng)) for x in range(len(gra))]))
@@ -49,7 +45,8 @@ def sag(target, gradient, dim_leng, upper_lim, lower_lim):
             elif r[cnt_r] < lower_lim:
                 r[cnt_r] = lower_lim
 
-        if ct % 10000 == 0:
+        if ct % 1000 == 0:
+            print("ik: {0}".format(ik))
             print('gradient: {0}'.format(gra_vec))
             print('alpha: {0}'.format(alpha))
             print('r: {0}'.format(r))
@@ -82,9 +79,9 @@ def minus2(a, center):
 
 
 def div_parabora10(r, i):
-    vfunc = np.vectorize(minus2)
-    tmp = vfunc(r, 10)
-    return tmp.sum()
+    res = np.zeros_like(r)
+    res[i] = minus2(r[i], 10)
+    return res
 
 
 def parabora10(r, val_min):
@@ -98,7 +95,7 @@ def test_target():
 """
 
 
-def test_sag(capsys):
+def test_sag():
     """
     parabora10に、val_minを部分適用し、rを引っこ抜いた状態の
     関数を与えて
@@ -106,8 +103,8 @@ def test_sag(capsys):
     10と一致という概念は、とりあえず、9.9から10.1の中に落ちることを確認する。
     """
     sol_list = sag(partial(parabora10, val_min=10), div_parabora10, 4, 100, -100)
-    out, err = capsys.readouterr()
-    print(out)
+#    out, err = capsys.readouterr()
+#    print(out)
     for sol in sol_list:
         print(sol)
         assert sol > 9.5 and sol < 10.5, \

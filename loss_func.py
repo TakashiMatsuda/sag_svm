@@ -42,7 +42,6 @@ def gradient_loss_func(r, lam, y, k, i):
     return res
 
 
-
 def test_loss_func():
     r = np.array([0.3, 4])
     lam = 0.4
