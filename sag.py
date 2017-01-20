@@ -25,7 +25,7 @@ def sag(target, gradient, dim_leng, upper_lim, lower_lim):
     gra_vec = np.zeros((dim_leng, dim_leng))
 
     # TODO: set the correct the step-size
-    CT = 10000
+    CT = 1000000
     L = lipshitz(gradient)
     alpha = 1 / (dim_leng * L)
     ik = 0
